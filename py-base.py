@@ -189,6 +189,8 @@ else:
 
 names = ['tony', 'jack', 'rose', 'brown', 'catty']
 
+# 无下标循环
+
 for name in names:
     print(name)
 
@@ -207,3 +209,22 @@ while n_wh > 0:
     n_wh -= 2
 print(sum_wh)
 
+# 带下标的循环
+
+for index, item in enumerate(names):
+    print(index, item)
+
+for x, y in [[1, 2], [3, 4], [5, 6]]:
+    print(x, y)
+
+# 遍历 dict 的 key
+for x in {'k1': 1, 'k2': False, 'k3': 'abc'}:
+    print(x)
+
+# 遍历 dict 的 value
+for y in {'k1': 1, 'k2': False, 'k3': 'abc'}.values():
+    print(y)
+
+# 遍历 dict 的 item
+for y in {'k1': 1, 'k2': False, 'k3': 'abc'}.items():
+    print(y)
