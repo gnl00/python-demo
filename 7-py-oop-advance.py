@@ -362,4 +362,43 @@ print(MyEnum.Wed.value)
 
 
 print('################# 元类 ###############')
-## 6、元类 type()
+## 6、元类 
+
+## type()
+# 动态语言和静态语言最大的不同，就是函数和类的定义，不是编译时定义的，而是运行时动态创建的
+# type()函数可以查看一个类型或变量的类型
+
+from Hello import Hello
+h = Hello()
+h.hello()
+
+# 我们说class的定义是运行时动态创建的，而创建class的方法就是使用type()函数
+# type()函数既可以返回一个对象的类型，又可以创建出新的类型，
+# 比如，我们可以通过type()函数创建出Hello类，而无需通过class Hello(object)...的定义
+print(type(Hello)) # <class 'type'>
+print(type(h)) # <class 'Hello.Hello'>
+
+# 要创建一个class对象，type()函数依次传入3个参数
+# 1、class的名称 
+# 2、继承的父类集合，注意Python支持多重继承，如果只有一个父类，别忘了tuple的单元素写法 
+# 3、class的方法名称与函数绑定
+
+
+## metaclass()
+# 除了使用type()动态创建类以外，要控制类的创建行为，还可以使用metaclass，直译为元类
+
+# 当我们定义了类以后，就可以根据这个类创建出实例，所以：先定义类，然后创建实例。
+# 但是如果我们想创建出类呢？那就必须根据metaclass创建出类，所以：先定义metaclass，然后创建类。
+# 连接起来就是：先定义metaclass，就可以创建类，最后创建实例
+
+# 定义ListMetaclass，
+# 按照默认习惯，metaclass的类名总是以Metaclass结尾，以便清楚地表示这是一个metaclass
+class ListMetaClass(type):
+    
+    def __new__(clazz, name, bases, attrs):
+        attrs['add'] = lambda self, val: self.append(val)
+        return type.__new__(clazz, name, bases, attrs)
+
+# 有了ListMetaclass，我们在定义类的时候还要指示使用ListMetaclass来定制类，传入关键字参数metaclass
+class MyList(list, metaclass=ListMetaClass):
+    pass
